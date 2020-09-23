@@ -11,21 +11,12 @@
 <script>
 	const url = "https://api.bubble-network.com/";
 
-	// Get bubbles
 	const getbubbles = new Request(url + "bubbles");
 	fetch(getbubbles).then(res => {
 		if(res.status == 200) {
 			res.text().then(t => console.log(t));
-		} else {
-			res.text().then(v => alert(v));
-		}
-	}).catch(e => console.log(e));
-
-	// Get chats
-	const getchats = new Request(url + "chats");
-	fetch(getchats).then(res => {
-		if(res.status == 200) {
-			res.text().then(t => console.log(t));
+			// Get bubbles
+			// Get chats
 		} else {
 			res.text().then(v => alert(v));
 		}
