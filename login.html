@@ -3,8 +3,30 @@
 	<h2>Nick</h2>
 	<input type="text" id="nick"/>
 
-	<h2>Password></h2>
+	<h2>Password</h2>
 	<input type="password" id="pass"/>
-	<br>
-	<input type="button">Login</input>
+	<p>
+		<input type="button" value="Login" onclick="getCookie();" />
+	</p>
 </form>
+<script src="https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/crypto-js/2.5.3-crypto-sha1.js"></script>
+<script>
+	function getCookie() {
+		const nick = document.getElementById("nick").value;
+		const pass = document.getElementById("pass").value;
+
+		const auth = "Basic " + btoa(nick + ":" + Crypto.SHA1(pass))
+		const request = new Request(
+			"https://api.bubble-network.com/login",
+			{ headers: new Headers({Authorization: auth}) }
+		);
+		fetch(request).then(res => {
+			if(res.status == 202) {
+				window.location.href = "main.html";
+			} else {
+				res.text().then((v) => alert(v));
+			}
+		}).catch(e => console.log(e));
+	}
+</script>
+
