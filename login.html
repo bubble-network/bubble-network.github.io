@@ -18,7 +18,10 @@
 		const auth = "Basic " + btoa(nick + ":" + Crypto.SHA1(pass))
 		const request = new Request(
 			"https://api.bubble-network.com/login",
-			{ headers: new Headers({Authorization: auth}) }
+			{ 
+				headers: new Headers({Authorization: auth}),
+				credentials: "include"
+			}
 		);
 		fetch(request).then(res => {
 			if(res.status == 202) {

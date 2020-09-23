@@ -11,7 +11,10 @@
 <script>
 	const url = "https://api.bubble-network.com/";
 
-	const getbubbles = new Request(url + "bubbles");
+	const getbubbles = new Request(
+		url + "bubbles",
+		{ credentials: "include" }
+	);
 	fetch(getbubbles).then(res => {
 		if(res.status == 200) {
 			res.text().then(t => console.log(t));
