@@ -13,6 +13,7 @@
 <ul id="chats"></ul>
 
 <h2>Profile</h2>
+<section id="profile"></section>
 
 <script>
 	const url = "https://api.bubble-network.com/";
@@ -23,7 +24,7 @@
 
 	function getbubbles() {
 		const request = new Request(
-			url + "bubbles",
+			url + "bubbles/?type=user",
 			{ credentials: "include" }
 		);
 		fetch(request).then(res => {
