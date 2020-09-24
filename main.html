@@ -1,6 +1,12 @@
 <h1>Main page</h1>
 
 <h2>Bubbles</h2>
+<input type="button" value="Get Bubbles" onclick="getbubbles();"/>
+<form>
+	<input id="name" type="text"/>
+	<input type="button" value="New Bubble" onclick="createbubble();"/>
+</form>
+
 <ul id="bubbles"></ul>
 
 <h2>Chats</h2>
@@ -11,19 +17,53 @@
 <script>
 	const url = "https://api.bubble-network.com/";
 
-	const getbubbles = new Request(
-		url + "bubbles",
-		{ credentials: "include" }
-	);
-	fetch(getbubbles).then(res => {
-		if(res.status == 200) {
-			res.text().then(t => console.log(t));
-			// Get bubbles
-			// Get chats
-		} else {
-			res.text().then(v => alert(v));
-		}
-	}).catch(e => console.log(e));
+	function bubble(b) {
+		return `<p>${b.Name}</p>`;
+	}
+
+	function getbubbles() {
+		const request = new Request(
+			url + "bubbles",
+			{ credentials: "include" }
+		);
+		fetch(request).then(res => {
+			if(res.status == 200) {
+				res.text().then(t => console.log(t));
+
+				let bubbles = document.getElementById("bubbles");
+
+				// Get bubbles
+				res.json().then(bs => {
+					bubbles.innerHTML = bs.map(b => bubble(b)).join("\n")
+				});
+
+				// Get chats
+			} else {
+				res.text().then(v => alert(v));
+			}
+		}).catch(e => console.log(e));
+	}
+
+	function createbubble() {
+		const name = document.getElementById("name").value;
+
+		const request = new Request(
+			url + "bubbles",
+			{ 
+				method: "POST",
+				credentials: "include"
+			}
+		);
+		fetch(request).then(res => {
+			if(res.status == 200) {
+				res.text().then(t => console.log(t));
+				// Get bubbles
+				// Get chats
+			} else {
+				res.text().then(v => alert(v));
+			}
+		}).catch(e => console.log(e));
+	}
 
 	// Connect websocket
 </script>
