@@ -26,7 +26,7 @@
 
 		const request = new Request(
 			"https://api.bubble-network.com/signup",
-			{ method: "POST", body: form, mode: "no-cors" }
+			{ method: "POST", body: form }
 		);
 		fetch(request).then(res => {
 			if(res.status == 203) {
