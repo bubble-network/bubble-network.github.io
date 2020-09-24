@@ -19,7 +19,7 @@
 	const url = "https://api.bubble-network.com/";
 
 	function bubble(b) {
-		return `<p>${b.Name}</p>`;
+		return `<li>${b.Name}</li>`;
 	}
 
 	function getbubbles() {
@@ -29,8 +29,6 @@
 		);
 		fetch(request).then(res => {
 			if(res.status == 200) {
-				res.text().then(t => console.log(t));
-
 				let bubbles = document.getElementById("bubbles");
 
 				// Get bubbles
