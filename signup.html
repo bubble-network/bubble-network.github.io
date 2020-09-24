@@ -29,7 +29,7 @@
 			{ method: "POST", body: form }
 		);
 		fetch(request).then(res => {
-			if(res.status == 203) {
+			if(res.status == 201) {
 				window.location.href = "login.html";
 			} else {
 				res.text().then((v) => alert(v));
