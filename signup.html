@@ -1,0 +1,40 @@
+<h1>Sign Up</h1>
+<form>
+	<h2>Email</h2>
+	<input type="text" id="email"/>
+
+	<h2>Nick</h2>
+	<input type="text" id="nick"/>
+
+	<h2>Password</h2>
+	<input type="password" id="pass"/>
+	<p>
+		<input type="button" value="Sign Up" onclick="signup();" />
+	</p>
+</form>
+<script src="https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/crypto-js/2.5.3-crypto-sha1.js"></script>
+<script>
+	function signup() {
+		const email = document.getElementById("email").value;
+		const nick = document.getElementById("nick").value;
+		const pass = document.getElementById("pass").value;
+
+		let form = new FormData();
+		form.append('email', email);
+		form.append('nick', nick);
+		form.append('password', Crypto.SHA1(pass));
+
+		const request = new Request(
+			"https://api.bubble-network.com/signup",
+			{ method: "POST", body: form }
+		);
+		fetch(request).then(res => {
+			if(res.status == 203) {
+				window.location.href = "login.html";
+			} else {
+				res.text().then((v) => alert(v));
+			}
+		}).catch(e => console.log(e));
+	}
+</script>
+
