@@ -22,7 +22,7 @@
 		let form = new FormData();
 		form.append('email', email);
 		form.append('nick', nick);
-		form.append('password', Crypto.SHA1(pass));
+		form.append('pass', Crypto.SHA1(pass));
 
 		const request = new Request(
 			"https://api.bubble-network.com/signup",
