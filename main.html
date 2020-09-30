@@ -13,7 +13,7 @@
 <ul id="chats"></ul>
 
 <h2>Profile</h2>
-<section id="profile"></section>
+<ul id="profile"></ul>
 
 <script>
 	const url = "https://api.bubble-network.com/";
@@ -58,6 +58,32 @@
 				res.text().then(t => console.log(t));
 				// Get bubbles
 				// Get chats
+			} else {
+				res.text().then(v => alert(v));
+			}
+		}).catch(e => console.log(e));
+	}
+
+	function profile(p) {
+		return `<li><strong>Name: </strong>${p.Name}</li>
+			<li><strong>Username: </strong>$p.Nick</li>
+			<li><strong>Email: </strong>$p.Email</li>
+			<li><strong>Default bubble thickness: </strong>$p.Config.DefaultBubbleThickness</li>
+			<li><strong>Auto join new bubbles: </strong>$p.Config.AutoJoinBubbles</li>`;
+	}
+
+	function getprofile() {
+		const name = document.getElementById("profile").value;
+
+		const request = new Request(
+			url + "myprofile",
+			{ credentials: "include" }
+		);
+		fetch(request).then(res => {
+			if(res.status == 200) {
+				res.json().then(p => {
+					profile.innerHTML = profile(p);
+				});
 			} else {
 				res.text().then(v => alert(v));
 			}
