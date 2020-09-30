@@ -74,7 +74,7 @@
 	}
 
 	function getprofile() {
-		let name = document.getElementById("profile");
+		let prof = document.getElementById("profile");
 
 		const request = new Request(
 			url + "myprofile",
@@ -83,7 +83,7 @@
 		fetch(request).then(res => {
 			if(res.status == 200) {
 				res.json().then(p => {
-					profile.innerHTML = profile(p);
+					prof.innerHTML = profile(p);
 				});
 			} else {
 				res.text().then(v => alert(v));
