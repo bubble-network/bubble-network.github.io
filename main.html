@@ -1,13 +1,19 @@
 <h1>Main page</h1>
 
-<h2>Bubbles</h2>
-<input type="button" value="Get Bubbles" onclick="getbubbles();"/>
+<h2>My Bubbles</h2>
 <form>
 	<input id="name" type="text"/>
 	<input type="button" value="New Bubble" onclick="createbubble();"/>
 </form>
 
+<input type="button" value="Get Bubbles" onclick="getbubbles();"/>
+
 <ul id="bubbles"></ul>
+
+<h2>Nearby bubbles</h2>
+<input type="button" value="Get bubbles" onclick="getnearby();"/>
+
+<ul id="nearby"></ul>
 
 <h2>Chats</h2>
 <ul id="chats"></ul>
@@ -31,6 +37,27 @@
 		fetch(request).then(res => {
 			if(res.status == 200) {
 				let bubbles = document.getElementById("bubbles");
+
+				// Get bubbles
+				res.json().then(bs => {
+					bubbles.innerHTML = bs.map(b => bubble(b)).join("\n")
+				});
+
+				// Get chats
+			} else {
+				res.text().then(v => alert(v));
+			}
+		}).catch(e => console.log(e));
+	}
+
+	function getnearby() {
+		const request = new Request(
+			url + "bubbles/nearby",
+			{ credentials: "include" }
+		);
+		fetch(request).then(res => {
+			if(res.status == 200) {
+				let bubbles = document.getElementById("nearby");
 
 				// Get bubbles
 				res.json().then(bs => {
