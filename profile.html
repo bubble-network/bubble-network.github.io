@@ -1,26 +1,7 @@
-<h1>Main page</h1>
-
 <a href="chats.html">Chats</a>
 <a href="bubbles.html">Bubbles</a>
 <a href="newbubble.html">New Bubble</a>
 <a href="nearby.html">Nearby</a>
-<a href="profile.html">Profile</a>
-
-
-<h2>My Bubbles</h2>
-<form>
-	<input id="name" type="text"/>
-	<input type="button" value="New Bubble" onclick="createbubble();"/>
-</form>
-
-<input type="button" value="Get Bubbles" onclick="getbubbles();"/>
-
-<ul id="bubbles"></ul>
-
-<h2>Nearby bubbles</h2>
-<input type="button" value="Get bubbles" onclick="getnearby();"/>
-
-<ul id="nearby"></ul>
 
 <h2>Profile</h2>
 <input type="button" value="Get profile" onclick="getprofile();"/>
@@ -28,73 +9,6 @@
 
 <script>
 	const url = "https://api.bubble-network.com/";
-
-	function bubble(b) {
-		return `<li>${b.Name}</li>`;
-	}
-
-	function getbubbles() {
-		const request = new Request(
-			url + "bubbles?type=user",
-			{ credentials: "include" }
-		);
-		fetch(request).then(res => {
-			if(res.status == 200) {
-				let bubbles = document.getElementById("bubbles");
-
-				// Get bubbles
-				res.json().then(bs => {
-					bubbles.innerHTML = bs.map(b => bubble(b)).join("\n")
-				});
-
-				// Get chats
-			} else {
-				res.text().then(v => alert(v));
-			}
-		}).catch(e => console.log(e));
-	}
-
-	function getnearby() {
-		const request = new Request(
-			url + "bubbles/nearby",
-			{ credentials: "include" }
-		);
-		fetch(request).then(res => {
-			if(res.status == 200) {
-				let bubbles = document.getElementById("nearby");
-
-				// Get bubbles
-				res.json().then(bs => {
-					bubbles.innerHTML = bs.map(b => bubble(b)).join("\n")
-				});
-
-				// Get chats
-			} else {
-				res.text().then(v => alert(v));
-			}
-		}).catch(e => console.log(e));
-	}
-
-	function createbubble() {
-		const name = document.getElementById("name").value;
-
-		const request = new Request(
-			url + "bubbles",
-			{ 
-				method: "POST",
-				credentials: "include"
-			}
-		);
-		fetch(request).then(res => {
-			if(res.status == 200) {
-				res.text().then(t => console.log(t));
-				// Get bubbles
-				// Get chats
-			} else {
-				res.text().then(v => alert(v));
-			}
-		}).catch(e => console.log(e));
-	}
 
 	function profile(p) {
 		return `<li><strong>Name: </strong>${p.Name}</li>
@@ -121,7 +35,5 @@
 			}
 		}).catch(e => console.log(e));
 	}
-
-	// Connect websocket
 </script>
 
