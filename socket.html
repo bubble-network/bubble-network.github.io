@@ -1,0 +1,62 @@
+<a href="bubbles.html">Bubbles</a>
+<a href="nearby.html">Nearby</a>
+<a href="profile.html">Profile</a>
+
+
+<h2>Web socket</h2>
+
+<div id="messages"></div>
+
+<form name="publish">
+	<input type="text" name="message">
+	<input type="submit" value="Send">
+</form>
+
+
+<script>
+	const url = "wss://api.bubble-network.com/ws";
+
+	const bubbleid = new URL(location.href).searchParams.get("bubbleid");
+
+	let socket = new WebSocket(url);
+
+	socket.onopen = function(e) {
+		alert("[open] Connection established");
+	};
+
+	// send message from the form
+	document.forms.publish.onsubmit = function() {
+		let outgoingMessage = `{
+			"type": "text-message",
+			"bubbleId": "${bubbleid}",
+			 "data": "${this.message.value}"
+		}`;
+
+		socket.send(outgoingMessage);
+		return false;
+	};
+
+	// message received - show the message in div#messages
+	socket.onmessage = function(event) {
+		let message = event.data;
+
+		let messageElem = document.createElement('div');
+		messageElem.textContent = message;
+		document.getElementById('messages').prepend(messageElem);
+	}
+
+	socket.onclose = function(event) {
+		if (event.wasClean) {
+			alert(`[close] Connection closed cleanly, code=${event.code} reason=${event.reason}`);
+		} else {
+			// e.g. server process killed or network down
+			// event.code is usually 1006 in this case
+			alert('[close] Connection died');
+		}
+	};
+
+	socket.onerror = function(error) {
+		alert(`[error] ${error.message}`);
+	};
+</script>
+
