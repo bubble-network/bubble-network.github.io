@@ -15,7 +15,7 @@
 	const url = "https://api.bubble-network.com/";
 
 	function bubble(b) {
-		return `<li>${b.Name}</li>`;
+		return `<li><a href="socket.html?bubbleid=${b.BubbleId}">${b.Name}</a></li>`
 	}
 
 	function getbubbles() {

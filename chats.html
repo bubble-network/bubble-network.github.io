@@ -13,7 +13,7 @@
 	const url = "https://api.bubble-network.com/";
 
 	function chat(c) {
-		return `<li>${c.Participants.join(", ")}</li>`
+		return `<li><a href="socket.html?bubbleid=${c.BubbleId}">${c.Participants.join(", ")}</a></li>`
 	}
 
 	function getchats() {
