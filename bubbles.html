@@ -1,0 +1,43 @@
+<a href="chats.html">Chats</a>
+<a href="newbubble.html">New Bubble</a>
+<a href="nearby.html">Nearby</a>
+<a href="profile.html">Profile</a>
+
+
+<h2>My Bubbles</h2>
+
+<input type="button" value="Get Bubbles" onclick="getbubbles();"/>
+
+<ul id="bubbles"></ul>
+
+
+<script>
+	const url = "https://api.bubble-network.com/";
+
+	function bubble(b) {
+		return `<li>${b.Name}</li>`;
+	}
+
+	function getbubbles() {
+		const request = new Request(
+			url + "bubbles?type=user",
+			{ credentials: "include" }
+		);
+		fetch(request).then(res => {
+			if(res.status == 200) {
+				let bubbles = document.getElementById("bubbles");
+
+				// Get bubbles
+				res.json().then(bs => {
+					bubbles.innerHTML = bs.map(b => bubble(b)).join("\n")
+				});
+
+				// Get chats
+			} else {
+				res.text().then(v => alert(v));
+			}
+		}).catch(e => console.log(e));
+	}
+
+</script>
+
