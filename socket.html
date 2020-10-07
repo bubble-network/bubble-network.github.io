@@ -41,7 +41,7 @@
 
 	// message received - show the message in div#messages
 	socket.onmessage = function(event) {
-		const message = json.parse(event.data);
+		const message = JSON.parse(event.data);
 
 		let messageelem = document.createelement('div');
 		messageelem.textcontent = `${message.sender} > ${message.data}`;
