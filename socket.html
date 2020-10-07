@@ -43,9 +43,9 @@
 	socket.onmessage = function(event) {
 		const message = JSON.parse(event.data);
 
-		let messageelem = document.createelement('div');
-		messageelem.textcontent = `${message.sender} > ${message.data}`;
-		document.getelementbyid('messages').append(messageelem);
+		let messageElem = document.createElement('div');
+		messageElem.textContent = `${message.Sender} > ${message.Data}`;
+		document.getElementById('messages').append(messageElem);
 	}
 
 	socket.onclose = function(event) {
