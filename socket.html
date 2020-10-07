@@ -22,7 +22,7 @@
 	let socket = new WebSocket(url);
 
 	socket.onopen = function(event) {
-		socket.send(JSON.stringfy({ Type: "get-messages", Data: {Limit: 10} }));
+		socket.send(JSON.stringify({ Type: "get-messages", Data: {Limit: 10} }));
 	}
 
 	// send message from the form
