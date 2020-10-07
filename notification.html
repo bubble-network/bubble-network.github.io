@@ -1,0 +1,37 @@
+<a href="chats.html">Chats</a>
+<a href="bubbles.html">Bubbles</a>
+<a href="newbubble.html">New Bubble</a>
+<a href="profile.html">Profile</a>
+
+
+<h2>Unread messages</h2>
+<input type="button" value="Get messages" onclick="getnotif();"/>
+
+<ul id="messages"></ul>
+
+<script>
+	const url = "https://api.bubble-network.com/";
+
+	function messsage(m) {
+		return `<li>${m.Sender} (${m.Time}): ${m.Data}</li>`;
+	}
+
+	function getnotif() {
+		const request = new Request(
+			url + "messages",
+			{ credentials: "include" }
+		);
+		fetch(request).then(res => {
+			if(res.status == 200) {
+				let messages = document.getElementById("messages");
+
+				res.json().then(bs => {
+					messages.innerHTML = bs.map(b => message(b)).join("\n")
+				});
+			} else if(res.status != 404) {
+				res.text().then(v => alert(v));
+			}
+		}).catch(e => console.log(e));
+	}
+</script>
+
