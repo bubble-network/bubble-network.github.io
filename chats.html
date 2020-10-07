@@ -30,7 +30,7 @@
 					bubbles.innerHTML = bs.map(b => chat(b)).join("\n")
 				});
 
-			} else {
+			} else if(res.status != 404) {
 				res.text().then(v => alert(v));
 			}
 		}).catch(e => console.log(e));
