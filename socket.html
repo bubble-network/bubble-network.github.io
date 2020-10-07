@@ -33,12 +33,14 @@
 		}`;
 
 		socket.send(outgoingMessage);
+		this.message.value = "";
+
 		return false;
 	};
 
 	// message received - show the message in div#messages
 	socket.onmessage = function(event) {
-		let message = event.data;
+		const message = JSON.parse(event.data);
 
 		let messageElem = document.createElement('div');
 		messageElem.textContent = `${message.Sender} > ${message.Data}`;
