@@ -21,6 +21,10 @@
 
 	let socket = new WebSocket(url);
 
+	socket.onopen = function(event) {
+		socket.send(JSON.stringfy({ Type: "get-messages", Data: {Limit: 10} }));
+	}
+
 	// send message from the form
 	document.forms.publish.onsubmit = function() {
 		let outgoingMessage = `{
@@ -37,11 +41,11 @@
 
 	// message received - show the message in div#messages
 	socket.onmessage = function(event) {
-		const message = JSON.parse(event.data);
+		const message = json.parse(event.data);
 
-		let messageElem = document.createElement('div');
-		messageElem.textContent = `${message.Sender} > ${message.Data}`;
-		document.getElementById('messages').append(messageElem);
+		let messageelem = document.createelement('div');
+		messageelem.textcontent = `${message.sender} > ${message.data}`;
+		document.getelementbyid('messages').append(messageelem);
 	}
 
 	socket.onclose = function(event) {
