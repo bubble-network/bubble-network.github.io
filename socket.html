@@ -41,8 +41,8 @@
 		let message = event.data;
 
 		let messageElem = document.createElement('div');
-		messageElem.textContent = message;
-		document.getElementById('messages').prepend(messageElem);
+		messageElem.textContent = `${message.Sender} > ${message.Data}`;
+		document.getElementById('messages').append(messageElem);
 	}
 
 	socket.onclose = function(event) {
