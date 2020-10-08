@@ -8,14 +8,22 @@
 
 <input type="button" value="Get Bubbles" onclick="getbubbles();"/>
 
-<ul id="bubbles"></ul>
+<div id="bubbles"></div>
 
 
 <script>
 	const url = "https://api.bubble-network.com/";
 
 	function bubble(b) {
-		return `<li><a href="socket.html?bubbleid=${b.BubbleId}">${b.Name}</a></li>`
+		return `<div>
+			<a href="bubble.html?bubbleid=${b.BubbleId}">${b.Name}</a>
+			<strong>Participants: </strong>${b.Participants.join(", ")}
+			<strong>Owner: </strong>${b.Owner}
+			<strong>Description: </strong>${b.Description}
+			<strong>Thickness: </strong>${b.Thickness}
+			<strong>Location: </strong>${b.Center.Coordinates.toString()}
+			<strong>Radius: </strong>${b.Radius}
+		</div>`
 	}
 
 	function getbubbles() {
@@ -29,10 +37,12 @@
 
 				// Get bubbles
 				res.json().then(bs => {
-					bubbles.innerHTML = bs.map(b => bubble(b)).join("\n")
+					bs.map(b => {
+						let bEl = document.createElement("div");
+						bEl.textContent = bubble(b);
+						document.getElementById('bubbles').append(bEl);
+					});
 				});
-
-				// Get chats
 			} else {
 				res.text().then(v => alert(v));
 			}
