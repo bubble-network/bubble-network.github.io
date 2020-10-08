@@ -10,19 +10,18 @@
 
 <div id="bubbles"></div>
 
-
 <script>
 	const url = "https://api.bubble-network.com/";
 
 	function bubble(b) {
 		return `<div>
-			<a href="bubble.html?bubbleid=${b.BubbleId}">${b.Name}</a>
-			<strong>Participants: </strong>${b.Participants.join(", ")}
-			<strong>Owner: </strong>${b.Owner}
-			<strong>Description: </strong>${b.Description}
-			<strong>Thickness: </strong>${b.Thickness}
-			<strong>Location: </strong>${b.Center.Coordinates.toString()}
-			<strong>Radius: </strong>${b.Radius}
+			<a href="socket.html?bubbleid=${b.BubbleId}">${b.Name}</a><br>
+			<strong>Participants: </strong>${b.Participants.join(", ")}<br>
+			<strong>Owner: </strong>${b.Owner}<br>
+			<strong>Description: </strong>${b.Description}<br>
+			<strong>Thickness: </strong>${b.Thickness}<br>
+			<strong>Location: </strong>${b.Center.Coordinates.toString()}<br>
+			<strong>Radius: </strong>${b.Radius}<br>
 		</div>`
 	}
 
@@ -44,6 +43,5 @@
 			}
 		}).catch(e => console.log(e));
 	}
-
 </script>
 
