@@ -37,11 +37,7 @@
 
 				// Get bubbles
 				res.json().then(bs => {
-					bs.map(b => {
-						let bEl = document.createElement("div");
-						bEl.textContent = bubble(b);
-						document.getElementById('bubbles').append(bEl);
-					});
+					bubbles.innerHTML = bs.map(b => bubble(b)).join("\n");
 				});
 			} else {
 				res.text().then(v => alert(v));
