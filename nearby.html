@@ -7,13 +7,20 @@
 <h2>Nearby bubbles</h2>
 <input type="button" value="Get bubbles" onclick="getnearby();"/>
 
-<ul id="nearby"></ul>
+<div id="nearby"></div>
 
+<script src="main.js"></script>
 <script>
-	const url = "https://api.bubble-network.com/";
-
 	function bubble(b) {
-		return `<li>${b.Name}</li>`;
+		return `<div>
+			<a href="socket.html?bubbleid=${b.BubbleId}">${b.Name}</a><br>
+			<strong>Participants: </strong>${b.Participants.join(", ")}<br>
+			<strong>Owner: </strong>${b.Owner}<br>
+			<strong>Description: </strong>${b.Description}<br>
+			<strong>Thickness: </strong>${b.Thickness}<br>
+			<strong>Location: </strong>${b.Location.Coordinates.toString()}<br>
+			<strong>Radius: </strong>${b.Radius}<br>
+		</div>`
 	}
 
 	function getnearby() {
@@ -22,15 +29,14 @@
 			{ credentials: "include" }
 		);
 		fetch(request).then(res => {
+			let bubbles = document.getElementById("nearby");
 			if(res.status == 200) {
-				let bubbles = document.getElementById("nearby");
-
 				// Get bubbles
 				res.json().then(bs => {
 					bubbles.innerHTML = bs.map(b => bubble(b)).join("\n")
 				});
-
-				// Get chats
+			} else if(res.status == 404) {
+				bubbles.innerHTML = "";
 			} else {
 				res.text().then(v => alert(v));
 			}

@@ -10,34 +10,36 @@
 
 <div id="bubbles"></div>
 
+<script src="main.js"></script>
 <script>
-	const url = "https://api.bubble-network.com/";
 
 	function bubble(b) {
 		return `<div>
 			<a href="socket.html?bubbleid=${b.BubbleId}">${b.Name}</a><br>
 			<strong>Participants: </strong>${b.Participants.join(", ")}<br>
 			<strong>Owner: </strong>${b.Owner}<br>
+			<strong>Type: </strong>${b.Type}<br>
 			<strong>Description: </strong>${b.Description}<br>
 			<strong>Thickness: </strong>${b.Thickness}<br>
-			<strong>Location: </strong>${b.Center.Coordinates.toString()}<br>
+			<strong>Location: </strong>${b.Location.Coordinates.toString()}<br>
 			<strong>Radius: </strong>${b.Radius}<br>
 		</div>`
 	}
 
 	function getbubbles() {
 		const request = new Request(
-			url + "bubbles?type=user",
+			url + "bubbles",
 			{ credentials: "include" }
 		);
 		fetch(request).then(res => {
+			let bubbles = document.getElementById("bubbles");
 			if(res.status == 200) {
-				let bubbles = document.getElementById("bubbles");
-
 				// Get bubbles
 				res.json().then(bs => {
 					bubbles.innerHTML = bs.map(b => bubble(b)).join("\n");
 				});
+			} else if (res.status == 404) {
+				bubbles.innerHTML = "";
 			} else {
 				res.text().then(v => alert(v));
 			}
