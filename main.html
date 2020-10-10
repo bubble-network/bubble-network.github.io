@@ -7,3 +7,46 @@
 <a href="https://api.bubble-network.com/logout">Logout</a>
 
 <h1>Main page</h1>
+
+<h2>Notifications</h2>
+<ul id="notifications"><ul>
+
+
+
+
+<script src="main.js"></script>
+<script>
+	function notify(m) {
+		return `<li><em>New bubble on range: </em>${m.Name}</li>`;
+	}
+
+	function updatelocation(location) {
+		const data = {
+			"Type": "Point",
+			"Coordinates": [
+				location.coords.latitude,
+				location.coords.longitude
+			]
+		};
+
+		const request = new Request(
+			url + "myprofile",
+			{ credentials: "include", method: "POST", body: JSON.stringify(data) }
+		);
+
+		fetch(request).then(res => {
+			if(res.status == 200) {
+				let notif = document.getElementById("notifications");
+
+				// Get new bubbles
+				res.json().then(bs => {
+					bubbles.innerHTML += bs.map(b => notify(b)).join("\n");
+				});
+			} else {
+				res.text().then(v => alert(v));
+			}
+		}).catch(e => console.log(e));
+	}
+
+	navigator.geolocation.getCurrentPosition(updatelocation);
+</script>
