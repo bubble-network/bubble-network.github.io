@@ -1,0 +1,22 @@
+<a href="bubbles.html">Bubbles</a>
+<a href="nearby.html">Nearby</a>
+<a href="profile.html">Profile</a>
+
+
+<h2>New Bubble</h2>
+<form action="https://api.bubble-network.com/bubbles" method="post" enctype="multipart/form-data">
+	<h2>Bubble Name</h2>
+	<input type="text" name="name"/>
+
+	<h2>Description</h2>
+	<input type="text" name="description"/>
+
+	<h2>Participants</h2>
+	<input type="text" name="participants"/>
+
+	<select name="type" size="0">
+		<option value="normal" selected></option>
+	</select>
+	<input type="submit" value="Create chat"/>
+</form>
+
