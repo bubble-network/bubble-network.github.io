@@ -14,9 +14,25 @@
 	<h2>Participants</h2>
 	<input type="text" name="participants"/>
 
+	<h2>Votes</h2>
+	<input type="text" name="votes"/>
+
+	<h2>Location</h2>
+
+	<input type="button" onclick="navigator.geolocation.getCurrentPosition(getlo); "/>
+	
+	<input id="location"type="text" name="location"/>
+
 	<select name="type" size="0">
 		<option value="normal" selected></option>
 	</select>
 	<input type="submit" value="Create chat"/>
 </form>
 
+<script>
+	function getloc(location) {
+		let coords = document.getElementById("location");
+		coords.value = `${location.coords.latitude},${location.coords.longitude}`;
+	}
+
+</script>
