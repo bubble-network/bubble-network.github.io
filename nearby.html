@@ -13,7 +13,7 @@
 <script>
 	function bubble(b) {
 		return `<div>
-			<input type="button" value="join" onclick="join('${b.BubbleId}');"/>
+			<input type="button" value="join" onclick="join('${b.BubbleId}');"/><br>
 			<strong>Name: </strong>${b.Name}<br>
 			<strong>Participants: </strong>${b.Participants.join(", ")}<br>
 			<strong>Owner: </strong>${b.Owner}<br>
@@ -30,7 +30,7 @@
 			{ credentials: "include" }
 		);
 		fetch(request).then(res => {
-			if (res.status == 200) {
+			if (res.status == 204) {
 				window.location.pathname = "socket.html?bubbleid="+bubbleid;
 			}
 		});
