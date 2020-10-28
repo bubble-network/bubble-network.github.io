@@ -13,7 +13,8 @@
 <script>
 	function bubble(b) {
 		return `<div>
-			<a href="socket.html?bubbleid=${b.BubbleId}">${b.Name}</a><br>
+			<input type="button" value="join" onclick="join('${b.BubbleId}');"/>
+			<strong>Name: </strong>${b.Name}<br>
 			<strong>Participants: </strong>${b.Participants.join(", ")}<br>
 			<strong>Owner: </strong>${b.Owner}<br>
 			<strong>Description: </strong>${b.Description}<br>
@@ -21,6 +22,18 @@
 			<strong>Location: </strong>${b.Location.Coordinates.toString()}<br>
 			<strong>Radius: </strong>${b.Radius}<br>
 		</div>`
+	}
+
+	function join(bubbleid) {
+		const request = new Request(
+			url + "bubbles/join?bubbleid="+bubbleid,
+			{ credentials: "include" }
+		);
+		fetch(request).then(res => {
+			if (res.status == 200) {
+				window.location.pathname = "socket.html?bubbleid="+bubbleid;
+			}
+		});
 	}
 
 	function getnearby() {
