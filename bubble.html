@@ -1,0 +1,46 @@
+<a href="chats.html">Chats</a>
+<a href="bubbles.html">Bubbles</a>
+<a href="newbubble.html">New Bubble</a>
+<a href="nearby.html">Nearby</a>
+
+
+<h2>Bubble</h2>
+
+<img id="banner"/>
+
+
+<ul id="bubble"></ul>
+
+<script>
+	const url = "https://api.bubble-network.com/";
+
+	const bubbleid = new URL(location.href).searchParams.get("bubbleid");
+
+	function bubble(p) {
+		return `<li><strong>Name: </strong>${p.Name}</li>
+			<li><strong>Participants: </strong>${p.Participants.join(", ")}</li>
+			<li><strong>Owner: </strong>${p.Owner}</li>
+			<li><strong>Description: </strong>${p.Description}</li>
+			<li><strong>Thickness: </strong>${p.Thickness}</li>
+			<li><strong>Location: </strong>${p.Center.Coordinates.toString()}</li>
+			<li><strong>Radius: </strong>${p.Radius}</li>`;
+	}
+
+	let banner = document.getElementById("banner");
+	let bubble = document.getElementById("bubble");
+
+	const request = new Request(
+		url + "bubbles?id=" + bubbleid,
+		{ credentials: "include" }
+	);
+	fetch(request).then(res => {
+		if(res.status == 200) {
+			res.json().then(p => {
+				bubble.innerHTML = bubble(p);
+			});
+		} else {
+			res.text().then(v => alert(v));
+		}
+	}).catch(e => console.log(e));
+</script>
+
