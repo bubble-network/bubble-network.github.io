@@ -15,32 +15,41 @@
 
 
 <script>
-	const url = "wss://api.bubble-network.com/ws";
+	const url = "wss://socket.bubble-network.com/ws";
+	const apiUrl = "https://api.bubble-network.com";
 
-	const bubbleid = new URL(location.href).searchParams.get("bubbleid");
+	const bubbleId = new URL(location.href).searchParams.get("bubbleid");
 
 	let socket = new WebSocket(url);
 
-	socket.onopen = function(event) {
-		socket.send(JSON.stringify({ BubbleId: bubbleid, Type: "get-messages", Data: {Limit: 10} }));
+	socket.onopen = function (event) {
+		socket.send(JSON.stringify({ BubbleId: bubbleId, Type: "get-messages", Data: { Limit: 10 } }));
 	}
 
 	// send message from the form
-	document.forms.publish.onsubmit = function() {
-		let outgoingMessage = `{
+	document.forms.publish.onsubmit = function () {
+		let outgoingMessage = {
 			"type": "text-message",
-			"bubbleId": "${bubbleid}",
-			 "data": "${this.message.value}"
-		}`;
+			"bubbleId": bubbleId,
+			"data": this.message.value
+		};
 
-		socket.send(outgoingMessage);
+		const request = new Request(
+			url + "bubbles/" + bubbleId,
+			{ credentials: "include", method: "POST", body: outgoingMessage }
+		);
+		fetch(request).then(res => {
+			if (res.status > 299) {
+				res.text().then(v => alert(v));
+			}
+		}).catch(e => console.log(e));
 		this.message.value = "";
 
 		return false;
 	};
 
 	// message received - show the message in div#messages
-	socket.onmessage = function(event) {
+	socket.onmessage = function (event) {
 		const message = JSON.parse(event.data);
 
 		let messageElem = document.createElement('div');
@@ -48,16 +57,16 @@
 		document.getElementById('messages').append(messageElem);
 	}
 
-	socket.onclose = function(event) {
+	socket.onclose = function (event) {
 		if (!event.wasClean) {
 			// e.g. server process killed or network down
 			// event.code is usually 1006 in this case
 			alert('[close] Connection died');
 		}
+		socket = new WebSocket(url);
 	};
 
-	socket.onerror = function(error) {
+	socket.onerror = function (error) {
 		console.log(`[error] ${error.message}`);
 	};
 </script>
-
