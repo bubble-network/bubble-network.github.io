@@ -35,7 +35,7 @@
 		};
 
 		const request = new Request(
-			apiUrl + "bubbles/" + bubbleId,
+			apiUrl + "/bubbles/" + bubbleId,
 			{ credentials: "include", method: "POST", body: outgoingMessage }
 		);
 		fetch(request).then(res => {
