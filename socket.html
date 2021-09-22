@@ -29,13 +29,13 @@
 	// send message from the form
 	document.forms.publish.onsubmit = function () {
 		let outgoingMessage = {
-			"type": "text-message",
-			"bubbleId": bubbleId,
-			"data": this.message.value
+			type: "text-message",
+			bubbleId: bubbleId,
+			data: this.message.value
 		};
 
 		const request = new Request(
-			url + "bubbles/" + bubbleId,
+			apiUrl + "bubbles/" + bubbleId,
 			{ credentials: "include", method: "POST", body: outgoingMessage }
 		);
 		fetch(request).then(res => {
