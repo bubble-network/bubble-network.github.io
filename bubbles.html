@@ -6,13 +6,12 @@
 
 <h2>My Bubbles</h2>
 
-<input type="button" value="Get Bubbles" onclick="getbubbles();"/>
+<input type="button" value="Get Bubbles" onclick="getbubbles();" />
 
 <div id="bubbles"></div>
 
-<script src="main.js"></script>
+<script src="defs.js"></script>
 <script>
-
 	function bubble(b) {
 		return `<div>
 			<a href="socket.html?bubbleid=${b.BubbleId}">${b.Name}</a><br>
@@ -28,12 +27,12 @@
 
 	function getbubbles() {
 		const request = new Request(
-			url + "bubbles",
+			apiUrl + "bubbles",
 			{ credentials: "include" }
 		);
 		fetch(request).then(res => {
 			let bubbles = document.getElementById("bubbles");
-			if(res.status == 200) {
+			if (res.status == 200) {
 				// Get bubbles
 				res.json().then(bs => {
 					bubbles.innerHTML = bs.map(b => bubble(b)).join("\n");
@@ -46,4 +45,3 @@
 		}).catch(e => console.log(e));
 	}
 </script>
-

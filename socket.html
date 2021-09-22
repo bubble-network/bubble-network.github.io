@@ -13,15 +13,10 @@
 	<input type="submit" value="Send">
 </form>
 
-
+<script src="defs.js"></script>
 <script>
-	const url = "wss://socket.bubble-network.com/ws";
-	const apiUrl = "https://api.bubble-network.com";
-
 	const bubbleId = new URL(location.href).searchParams.get("bubbleid");
-
-	let socket = new WebSocket(url);
-
+	let socket = new WebSocket(wsUrl);
 	socket.onopen = function (event) {
 		socket.send(JSON.stringify({ BubbleId: bubbleId, Type: "get-messages", Data: { Limit: 10 } }));
 	}
@@ -35,7 +30,7 @@
 		};
 
 		const request = new Request(
-			apiUrl + "/bubbles/" + bubbleId,
+			apiUrl + "bubbles/" + bubbleId,
 			{ credentials: "include", method: "POST", body: JSON.stringify(msg) }
 		);
 		fetch(request).then(res => {

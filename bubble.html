@@ -6,14 +6,13 @@
 
 <h2>Bubble</h2>
 
-<img id="banner"/>
+<img id="banner" />
 
 
 <ul id="bubble"></ul>
 
+<script src="defs.js"></script>
 <script>
-	const url = "https://api.bubble-network.com/";
-
 	const bubbleid = new URL(location.href).searchParams.get("bubbleid");
 
 	function bubble(p) {
@@ -30,11 +29,11 @@
 	let bubble = document.getElementById("bubble");
 
 	const request = new Request(
-		url + "bubbles?id=" + bubbleid,
+		apiUrl + "bubbles?id=" + bubbleid,
 		{ credentials: "include" }
 	);
 	fetch(request).then(res => {
-		if(res.status == 200) {
+		if (res.status == 200) {
 			res.json().then(p => {
 				bubble.innerHTML = bubble(p);
 			});
@@ -43,4 +42,3 @@
 		}
 	}).catch(e => console.log(e));
 </script>
-

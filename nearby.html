@@ -5,11 +5,11 @@
 
 
 <h2>Nearby bubbles</h2>
-<input type="button" value="Get bubbles" onclick="getnearby();"/>
+<input type="button" value="Get bubbles" onclick="getnearby();" />
 
 <div id="nearby"></div>
 
-<script src="main.js"></script>
+<script src="defs.js"></script>
 <script>
 	function bubble(b) {
 		return `<div>
@@ -26,29 +26,29 @@
 
 	function join(bubbleid) {
 		const request = new Request(
-			url + "bubbles/join?bubbleid="+bubbleid,
+			apiUrl + "bubbles/join?bubbleid=" + bubbleid,
 			{ credentials: "include" }
 		);
 		fetch(request).then(res => {
 			if (res.status == 204) {
-				window.location.href = window.location.origin + "/socket.html?bubbleid="+bubbleid;
+				window.location.href = window.location.origin + "/socket.html?bubbleid=" + bubbleid;
 			}
 		});
 	}
 
 	function getnearby() {
 		const request = new Request(
-			url + "bubbles/nearby",
+			apiUrl + "bubbles/nearby",
 			{ credentials: "include" }
 		);
 		fetch(request).then(res => {
 			let bubbles = document.getElementById("nearby");
-			if(res.status == 200) {
+			if (res.status == 200) {
 				// Get bubbles
 				res.json().then(bs => {
 					bubbles.innerHTML = bs.map(b => bubble(b)).join("\n")
 				});
-			} else if(res.status == 404) {
+			} else if (res.status == 404) {
 				bubbles.innerHTML = "";
 			} else {
 				res.text().then(v => alert(v));
@@ -56,4 +56,3 @@
 		}).catch(e => console.log(e));
 	}
 </script>
-

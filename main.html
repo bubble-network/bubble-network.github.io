@@ -9,12 +9,10 @@
 <h1>Main page</h1>
 
 <h2>Notifications</h2>
-<ul id="notifications"><ul>
+<ul id="notifications">
+</ul>
 
-
-
-
-<script src="main.js"></script>
+<script src="defs.js"></script>
 <script>
 	function notify(m) {
 		return `<li><em>New bubble on range: </em>${m.Name}</li>`;
@@ -30,12 +28,12 @@
 		};
 
 		const request = new Request(
-			url + "myprofile",
+			apiUrl + "myprofile",
 			{ credentials: "include", method: "POST", body: JSON.stringify(data) }
 		);
 
 		fetch(request).then(res => {
-			if(res.status == 200) {
+			if (res.status == 200) {
 				let notif = document.getElementById("notifications");
 
 				// Get new bubbles

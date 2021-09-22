@@ -5,24 +5,23 @@
 
 
 <h2>Chats</h2>
-<input type="button" value="Get chats" onclick="getchats();"/>
+<input type="button" value="Get chats" onclick="getchats();" />
 
 <ul id="chats"></ul>
 
+<script src="defs.js"></script>
 <script>
-	const url = "https://api.bubble-network.com/";
-
 	function chat(c) {
 		return `<li><a href="socket.html?bubbleid=${c.BubbleId}">${c.Participants.join(", ")}</a></li>`
 	}
 
 	function getchats() {
 		const request = new Request(
-			url + "bubbles?type=chat",
+			apiUrl + "bubbles?type=chat",
 			{ credentials: "include" }
 		);
 		fetch(request).then(res => {
-			if(res.status == 200) {
+			if (res.status == 200) {
 				let bubbles = document.getElementById("chats");
 
 				// Get bubbles
@@ -30,11 +29,10 @@
 					bubbles.innerHTML = bs.map(b => chat(b)).join("\n")
 				});
 
-			} else if(res.status != 404) {
+			} else if (res.status != 404) {
 				res.text().then(v => alert(v));
 			}
 		}).catch(e => console.log(e));
 	}
 
 </script>
-

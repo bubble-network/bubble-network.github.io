@@ -1,17 +1,19 @@
 <h1>Login</h1>
 <form>
 	<h2>Nick</h2>
-	<input type="text" id="nick"/>
+	<input type="text" id="nick" />
 
 	<h2>Password</h2>
-	<input type="password" id="pass"/>
+	<input type="password" id="pass" />
 	<p>
 		<input type="button" value="Login" onclick="getCookie();" />
 	</p>
 </form>
 <a href="signup.html">Sign Up</a>
 
-<script src="https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/crypto-js/2.5.3-crypto-sha1.js"></script>
+<script
+	src="https://storage.googleapis.com/google-code-archive-downloads/v2/code.google.com/crypto-js/2.5.3-crypto-sha1.js"></script>
+<script src="defs.js"></script>
 <script>
 	function getCookie() {
 		const nick = document.getElementById("nick").value;
@@ -19,14 +21,14 @@
 
 		const auth = "Basic " + btoa(nick + ":" + Crypto.SHA1(pass))
 		const request = new Request(
-			"https://api.bubble-network.com/login",
-			{ 
-				headers: new Headers({Authorization: auth}),
+			apiUrl + "login",
+			{
+				headers: new Headers({ Authorization: auth }),
 				credentials: "include"
 			}
 		);
 		fetch(request).then(res => {
-			if(res.status == 202) {
+			if (res.status == 202) {
 				window.location.href = "main.html";
 			} else {
 				res.text().then((v) => alert(v));
@@ -34,4 +36,3 @@
 		}).catch(e => console.log(e));
 	}
 </script>
-
