@@ -1,21 +1,32 @@
-<a href="bubbles.html">Bubbles</a>
-<a href="newchat.html">New Chat</a>
-<a href="nearby.html">Nearby</a>
-<a href="profile.html">Profile</a>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+	<meta charset="utf-8">
+	<title>Chat Bubbles</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
 
-<h2>Chats</h2>
-<input type="button" value="Get chats" onclick="getchats();" />
+<body>
+	<nav>
+		<a href="chats.html">Chats</a>
+		<a href="bubbles.html">Bubbles</a>
+		<a href="newbubble.html">New Bubble</a>
+		<a href="nearby.html">Nearby</a>
+		<a href="profile.html">Profile</a>
+		<a href="logout">Logout</a>
+	</nav>
 
-<ul id="chats"></ul>
+	<h2>Chats</h2>
 
-<script src="defs.js"></script>
-<script>
-	function chat(c) {
-		return `<li><a href="socket.html?bubbleid=${c.BubbleId}">${c.Participants.join(", ")}</a></li>`
-	}
+	<ul id="chats"></ul>
 
-	function getchats() {
+	<script src="defs.js"></script>
+	<script>
+		function chat(c) {
+			return `<li><a href="socket.html?bubbleid=${c.BubbleId}">${c.Participants.join(", ")}</a></li>`
+		}
+
 		const request = new Request(
 			apiUrl + "bubbles?type=chat",
 			{ credentials: "include" }
@@ -33,6 +44,7 @@
 				res.text().then(v => alert(v));
 			}
 		}).catch(e => console.log(e));
-	}
+	</script>
+</body>
 
-</script>
+</html>

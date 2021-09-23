@@ -1,38 +1,58 @@
-<a href="bubbles.html">Bubbles</a>
-<a href="nearby.html">Nearby</a>
-<a href="profile.html">Profile</a>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+	<meta charset="utf-8">
+	<title>Nearby Bubbles</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
 
-<h2>New Bubble</h2>
-<form action="https://api.bubble-network.com/bubbles" method="post" enctype="multipart/form-data">
-	<h2>Bubble Name</h2>
-	<input type="text" name="name"/>
+<body>
+	<nav>
+		<a href="chats.html">Chats</a>
+		<a href="bubbles.html">Bubbles</a>
+		<a href="newbubble.html">New Bubble</a>
+		<a href="nearby.html">Nearby</a>
+		<a href="profile.html">Profile</a>
+		<a href="logout">Logout</a>
+	</nav>
 
-	<h2>Description</h2>
-	<input type="text" name="description"/>
+	<h2>New Bubble</h2>
+	<fieldset>
+		<form action="https://api.bubble-network.com/bubbles" method="post" enctype="multipart/form-data">
+			<h2>Bubble Name</h2>
+			<input type="text" name="name" />
 
-	<h2>Participants</h2>
-	<input type="text" name="participants"/>
+			<h2>Description</h2>
+			<input type="text" name="description" />
 
-	<h2>Votes</h2>
-	<input type="text" name="votes"/>
+			<h2>Participants</h2>
+			<input type="text" name="participants" />
 
-	<h2>Location</h2>
+			<h2>Votes</h2>
+			<input type="text" name="votes" />
 
-	<input type="button" onclick="navigator.geolocation.getCurrentPosition(getlo); "/>
-	
-	<input id="location"type="text" name="location"/>
+			<h2>Location</h2>
 
-	<select name="type" size="0">
-		<option value="normal" selected></option>
-	</select>
-	<input type="submit" value="Create chat"/>
-</form>
+			<input type="button" onclick="navigator.geolocation.getCurrentPosition(getlo); " />
 
-<script>
-	function getloc(location) {
-		let coords = document.getElementById("location");
-		coords.value = `${location.coords.latitude},${location.coords.longitude}`;
-	}
+			<input id="location" type="text" name="location" />
 
-</script>
+			<select name="type" size="0">
+				<option value="normal" selected></option>
+			</select>
+			<br>
+			<input type="submit" value="Create chat" />
+		</form>
+
+	</fieldset>
+	<script>
+		function getloc(location) {
+			let coords = document.getElementById("location");
+			coords.value = `${location.coords.latitude},${location.coords.longitude}`;
+		}
+
+	</script>
+</body>
+
+</html>

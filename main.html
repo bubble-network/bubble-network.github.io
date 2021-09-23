@@ -1,50 +1,62 @@
-<a href="chats.html">Chats</a>
-<a href="bubbles.html">Bubbles</a>
-<a href="newbubble.html">New Bubble</a>
-<a href="nearby.html">Nearby</a>
-<a href="profile.html">Profile</a>
-<a href="notification.html">Notifications</a>
-<a href="https://api.bubble-network.com/logout">Logout</a>
+<!DOCTYPE html>
+<html lang="en">
 
-<h1>Main page</h1>
+<head>
+	<meta charset="utf-8">
+	<title>Bubble network</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
 
-<h2>Notifications</h2>
-<ul id="notifications">
-</ul>
+<body>
+	<nav>
+		<a href="chats.html">Chats</a>
+		<a href="bubbles.html">Bubbles</a>
+		<a href="newbubble.html">New Bubble</a>
+		<a href="nearby.html">Nearby</a>
+		<a href="profile.html">Profile</a>
+		<a href="logout">Logout</a>
+	</nav>
 
-<script src="defs.js"></script>
-<script>
-	function notify(m) {
-		return `<li><em>New bubble on range: </em>${m.Name}</li>`;
-	}
+	<h2>Recent</h2>
+	<ul id="notifications">
+	</ul>
 
-	function updatelocation(location) {
-		const data = {
-			"Type": "Point",
-			"Coordinates": [
-				location.coords.latitude,
-				location.coords.longitude
-			]
-		};
+	<script src="defs.js"></script>
+	<script>
+		function notify(m) {
+			return `<li><em>New bubble on range: </em>${m.Name}</li>`;
+		}
 
-		const request = new Request(
-			apiUrl + "myprofile",
-			{ credentials: "include", method: "POST", body: JSON.stringify(data) }
-		);
+		function updatelocation(location) {
+			const data = {
+				"Type": "Point",
+				"Coordinates": [
+					location.coords.latitude,
+					location.coords.longitude
+				]
+			};
 
-		fetch(request).then(res => {
-			if (res.status == 200) {
-				let notif = document.getElementById("notifications");
+			const request = new Request(
+				apiUrl + "myprofile",
+				{ credentials: "include", method: "POST", body: JSON.stringify(data) }
+			);
 
-				// Get new bubbles
-				res.json().then(bs => {
-					bubbles.innerHTML += bs.map(b => notify(b)).join("\n");
-				});
-			} else {
-				res.text().then(v => alert(v));
-			}
-		}).catch(e => console.log(e));
-	}
+			fetch(request).then(res => {
+				if (res.status == 200) {
+					let notif = document.getElementById("notifications");
 
-	navigator.geolocation.getCurrentPosition(updatelocation);
-</script>
+					// Get new bubbles
+					res.json().then(bs => {
+						bubbles.innerHTML += bs.map(b => notify(b)).join("\n");
+					});
+				} else if (res.status == 500) {
+					res.text().then(v => alert(v));
+				}
+			}).catch(e => console.log(e));
+		}
+
+		navigator.geolocation.getCurrentPosition(updatelocation);
+	</script>
+</body>
+
+</html>

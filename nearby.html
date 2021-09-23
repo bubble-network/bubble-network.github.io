@@ -1,18 +1,30 @@
-<a href="chats.html">Chats</a>
-<a href="bubbles.html">Bubbles</a>
-<a href="newbubble.html">New Bubble</a>
-<a href="profile.html">Profile</a>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+	<meta charset="utf-8">
+	<title>Nearby Bubbles</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
 
-<h2>Nearby bubbles</h2>
-<input type="button" value="Get bubbles" onclick="getnearby();" />
+<body>
+	<nav>
+		<a href="chats.html">Chats</a>
+		<a href="bubbles.html">Bubbles</a>
+		<a href="newbubble.html">New Bubble</a>
+		<a href="nearby.html">Nearby</a>
+		<a href="profile.html">Profile</a>
+		<a href="logout">Logout</a>
+	</nav>
 
-<div id="nearby"></div>
+	<h2>Nearby bubbles</h2>
 
-<script src="defs.js"></script>
-<script>
-	function bubble(b) {
-		return `<div>
+	<div id="nearby"></div>
+
+	<script src="defs.js"></script>
+	<script>
+		function bubble(b) {
+			return `<div>
 			<input type="button" value="join" onclick="join('${b.BubbleId}');"/><br>
 			<strong>Name: </strong>${b.Name}<br>
 			<strong>Participants: </strong>${b.Participants.join(", ")}<br>
@@ -22,21 +34,20 @@
 			<strong>Location: </strong>${b.Location.Coordinates.toString()}<br>
 			<strong>Radius: </strong>${b.Radius}<br>
 		</div>`
-	}
+		}
 
-	function join(bubbleid) {
-		const request = new Request(
-			apiUrl + "bubbles/join?bubbleid=" + bubbleid,
-			{ credentials: "include" }
-		);
-		fetch(request).then(res => {
-			if (res.status == 204) {
-				window.location.href = window.location.origin + "/socket.html?bubbleid=" + bubbleid;
-			}
-		});
-	}
+		function join(bubbleid) {
+			const request = new Request(
+				apiUrl + "bubbles/join?bubbleid=" + bubbleid,
+				{ credentials: "include" }
+			);
+			fetch(request).then(res => {
+				if (res.status == 204) {
+					window.location.href = window.location.origin + "/socket.html?bubbleid=" + bubbleid;
+				}
+			});
+		}
 
-	function getnearby() {
 		const request = new Request(
 			apiUrl + "bubbles/nearby",
 			{ credentials: "include" }
@@ -54,5 +65,7 @@
 				res.text().then(v => alert(v));
 			}
 		}).catch(e => console.log(e));
-	}
-</script>
+	</script>
+</body>
+
+</html>

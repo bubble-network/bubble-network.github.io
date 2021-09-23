@@ -1,67 +1,82 @@
-<a href="chats.html">Chats</a>
-<a href="bubbles.html">Bubbles</a>
-<a href="nearby.html">Nearby</a>
-<a href="profile.html">Profile</a>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+	<meta charset="utf-8">
+	<title>Bubble Network Chat</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
 
-<h2>Web socket</h2>
+<body>
+	<nav>
+		<a href="chats.html">Chats</a>
+		<a href="bubbles.html">Bubbles</a>
+		<a href="newbubble.html">New Bubble</a>
+		<a href="nearby.html">Nearby</a>
+		<a href="profile.html">Profile</a>
+		<a href="logout">Logout</a>
+	</nav>
+	<h2>Web socket</h2>
 
-<div id="messages"></div>
+	<div id="messages"></div>
 
-<form name="publish">
-	<input type="text" name="message">
-	<input type="submit" value="Send">
-</form>
+	<form name="publish">
+		<input type="text" name="message" autofocus>
+		<input type="submit" value="Send">
+	</form>
 
-<script src="defs.js"></script>
-<script>
-	const bubbleId = new URL(location.href).searchParams.get("bubbleid");
-	let socket = new WebSocket(wsUrl);
-	socket.onopen = function (event) {
-		socket.send(JSON.stringify({ BubbleId: bubbleId, Type: "get-messages", Data: { Limit: 10 } }));
-	}
+	<script src="defs.js"></script>
+	<script>
+		const bubbleId = new URL(location.href).searchParams.get("bubbleid");
+		let socket = new WebSocket(wsUrl);
+		socket.onopen = function (event) {
+			socket.send(JSON.stringify({ BubbleId: bubbleId, Type: "get-messages", Data: { Limit: 10 } }));
+		}
 
-	// send message from the form
-	document.forms.publish.onsubmit = function () {
-		let msg = {
-			type: "text-message",
-			bubbleId: bubbleId,
-			data: this.message.value
+		// send message from the form
+		document.forms.publish.onsubmit = function () {
+			let msg = {
+				type: "text-message",
+				bubbleId: bubbleId,
+				data: this.message.value
+			};
+
+			const request = new Request(
+				apiUrl + "bubbles/" + bubbleId,
+				{ credentials: "include", method: "POST", body: JSON.stringify(msg) }
+			);
+			fetch(request).then(res => {
+				if (res.status > 299) {
+					res.text().then(v => alert(v));
+				}
+			}).catch(e => console.log(e));
+			this.message.value = "";
+
+			return false;
 		};
 
-		const request = new Request(
-			apiUrl + "bubbles/" + bubbleId,
-			{ credentials: "include", method: "POST", body: JSON.stringify(msg) }
-		);
-		fetch(request).then(res => {
-			if (res.status > 299) {
-				res.text().then(v => alert(v));
-			}
-		}).catch(e => console.log(e));
-		this.message.value = "";
+		// message received - show the message in div#messages
+		socket.onmessage = function (event) {
+			const message = JSON.parse(event.data);
 
-		return false;
-	};
-
-	// message received - show the message in div#messages
-	socket.onmessage = function (event) {
-		const message = JSON.parse(event.data);
-
-		let messageElem = document.createElement('div');
-		messageElem.textContent = `${message.Sender} > ${message.Data}`;
-		document.getElementById('messages').append(messageElem);
-	}
-
-	socket.onclose = function (event) {
-		if (!event.wasClean) {
-			// e.g. server process killed or network down
-			// event.code is usually 1006 in this case
-			alert('[close] Connection died');
+			let messageElem = document.createElement('div');
+			messageElem.textContent = `${message.Sender} > ${message.Data}`;
+			document.getElementById('messages').append(messageElem);
 		}
-		socket = new WebSocket(url);
-	};
 
-	socket.onerror = function (error) {
-		console.log(`[error] ${error.message}`);
-	};
-</script>
+		socket.onclose = function (event) {
+			if (!event.wasClean) {
+				// e.g. server process killed or network down
+				// event.code is usually 1006 in this case
+				alert('[close] Connection died');
+			}
+			socket = new WebSocket(url);
+		};
+
+		socket.onerror = function (error) {
+			console.log(`[error] ${error.message}`);
+		};
+	</script>
+</body>
+
+</html>

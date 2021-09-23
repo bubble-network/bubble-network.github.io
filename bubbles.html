@@ -1,19 +1,30 @@
-<a href="chats.html">Chats</a>
-<a href="newbubble.html">New Bubble</a>
-<a href="nearby.html">Nearby</a>
-<a href="profile.html">Profile</a>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+	<meta charset="utf-8">
+	<title>My Bubbles</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
 
-<h2>My Bubbles</h2>
+<body>
+	<nav>
+		<a href="chats.html">Chats</a>
+		<a href="bubbles.html">Bubbles</a>
+		<a href="newbubble.html">New Bubble</a>
+		<a href="nearby.html">Nearby</a>
+		<a href="profile.html">Profile</a>
+		<a href="logout">Logout</a>
+	</nav>
 
-<input type="button" value="Get Bubbles" onclick="getbubbles();" />
+	<h2>My Bubbles</h2>
 
-<div id="bubbles"></div>
+	<div id="bubbles"></div>
 
-<script src="defs.js"></script>
-<script>
-	function bubble(b) {
-		return `<div>
+	<script src="defs.js"></script>
+	<script>
+		function bubble(b) {
+			return `<div>
 			<a href="socket.html?bubbleid=${b.BubbleId}">${b.Name}</a><br>
 			<strong>Participants: </strong>${b.Participants.join(", ")}<br>
 			<strong>Owner: </strong>${b.Owner}<br>
@@ -23,9 +34,8 @@
 			<strong>Location: </strong>${b.Location.Coordinates.toString()}<br>
 			<strong>Radius: </strong>${b.Radius}<br>
 		</div>`
-	}
+		}
 
-	function getbubbles() {
 		const request = new Request(
 			apiUrl + "bubbles",
 			{ credentials: "include" }
@@ -43,5 +53,7 @@
 				res.text().then(v => alert(v));
 			}
 		}).catch(e => console.log(e));
-	}
-</script>
+	</script>
+</body>
+
+</html>

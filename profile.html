@@ -1,26 +1,37 @@
-<a href="chats.html">Chats</a>
-<a href="bubbles.html">Bubbles</a>
-<a href="newbubble.html">New Bubble</a>
-<a href="nearby.html">Nearby</a>
+<!DOCTYPE html>
+<html lang="en">
 
-<h2>Profile</h2>
-<input type="button" value="Get profile" onclick="getprofile();" />
-<ul id="profile"></ul>
+<head>
+	<meta charset="utf-8">
+	<title>Bubble network profile</title>
+	<link rel="stylesheet" href="styles.css">
+</head>
 
-<script src="defs.js"></script>
-<script>
-	function profile(p) {
-		return `<li><strong>Name: </strong>${p.Name}</li>
+<body>
+	<nav>
+		<a href="chats.html">Chats</a>
+		<a href="bubbles.html">Bubbles</a>
+		<a href="newbubble.html">New Bubble</a>
+		<a href="nearby.html">Nearby</a>
+		<a href="profile.html">Profile</a>
+		<a href="logout">Logout</a>
+	</nav>
+
+	<h2>You</h2>
+	<ul id="profile"></ul>
+
+	<script src="defs.js"></script>
+	<script>
+		function profile(p) {
+			return `<li><strong>Name: </strong>${p.Name}</li>
 			<li><strong>Username: </strong>${p.Nick}</li>
 			<li><strong>Email: </strong>${p.Email}</li>
 			<li><strong>Default bubble thickness: </strong>${p.Config.DefaultBubbleThickness}</li>
 			<li><strong>Location: </strong>${p.Location.Coordinates.toString()}</li>
 			<li><strong>Auto join new bubbles: </strong>${p.Config.AutoJoinBubbles}</li>`;
-	}
+		}
 
-	function getprofile() {
 		let prof = document.getElementById("profile");
-
 		const request = new Request(
 			apiUrl + "myprofile",
 			{ credentials: "include" }
@@ -34,5 +45,7 @@
 				res.text().then(v => alert(v));
 			}
 		}).catch(e => console.log(e));
-	}
-</script>
+	</script>
+</body>
+
+</html>

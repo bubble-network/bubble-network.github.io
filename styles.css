@@ -1,0 +1,58 @@
+body {
+    max-width: 800px;
+    margin: 0 auto;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+nav {
+    text-align: center;
+}
+
+fieldset {
+    text-align: center;
+    border-radius: 10px;
+}
+
+form[name="publish"] {
+    position: absolute;
+    top: 100%;
+    transform: translateY(-100%);
+}
+
+input, textarea, select {
+	background: #eee;
+	padding: 2px 6px;
+	border-radius: 5px;
+	border-width: 1px;
+	filter: none;
+}
+
+input:focus, textarea:focus {
+	outline: none;
+	box-shadow: inset 0 0 3px white;
+	border-radius: 6px;
+}
+
+@media (prefers-color-scheme: dark) {
+	body {
+		color: #eee;
+		background: #222;
+	}
+
+	article {
+		color: #ddd;
+	}
+	
+	a {
+		color: #ffffff;
+	}
+
+	input, textarea, select {
+		background: #222;
+		color: #eee;
+	}
+
+	span > div::after {
+		content: url('data:image/svg+xml; utf8, <svg viewBox="0 0 10 10" xmlns="http://www.w3.org/2000/svg" width="5px"><circle cx="5" cy="5" r="5" fill="white"/></svg>');
+	}
+}
