@@ -9,7 +9,6 @@
 
 <body>
 	<nav>
-		<a href="chats.html">Chats</a>
 		<a href="bubbles.html">Bubbles</a>
 		<a href="newbubble.html">New Bubble</a>
 		<a href="nearby.html">Nearby</a>
@@ -25,7 +24,7 @@
 	<script>
 		function bubble(b) {
 			return `<div>
-			<a href="socket.html?bubbleid=${b.BubbleId}">${b.Name}</a><br>
+			<a href="socket.html?bubbleid=${b.BubbleId}">${b.BubbleId}</a><br>
 			<strong>Participants: </strong>${b.Participants.join(", ")}<br>
 			<strong>Owner: </strong>${b.Owner}<br>
 			<strong>Type: </strong>${b.Type}<br>
